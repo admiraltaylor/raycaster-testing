@@ -44,7 +44,8 @@ function init(){
   animate();
 
     function animate(){
-    floor.rotation.z += 0.01;
+    floor.rotation.z += 0.001;
+    cube.rotation.y -= 0.001;
     renderer.render(scene, camera);
     requestAnimationFrame(animate)
   }
@@ -96,10 +97,14 @@ function init(){
   function onDocumentMouseDown(event){
     event.preventDefault();
     mouse.x = (event.clientX/renderer.domElement.width) * 2 - 1;
-    mouse.y = (event.clientY/renderer.domElement.height) * 2 + 1;
+    mouse.y = - (event.clientY/renderer.domElement.height) * 2 + 1;
     console.log(mouse.x + ',  ' + mouse.y );
     raycaster.setFromCamera(mouse, camera);
     var intersects = raycaster.intersectObjects(scene.children);
+    if (intersects.length > 0){
+        var color = (Math.random() * 0xffffff);
+        intersects[0].object.material.color.set(color);
+    }
     console.log(intersects);
 
 
