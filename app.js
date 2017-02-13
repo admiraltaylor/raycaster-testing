@@ -26,6 +26,17 @@ function init(){
   camera.position.set(500, 300, 800);
   camera.lookAt(scene.position);
 
+  //mouse interactivity, I hope
+  //adding raycaster and mouse as 2d vector
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
+
+  //event listener for mouse
+  //document.addEventListener('mousedown', onMouseMove, false);
+  document.addEventListener('mousedown', onDocumentMouseDown, false);
+  document.addEventListener('touchstart', onDocumentTouchStart, false);
+
+
   createObjects();
 
 
@@ -33,7 +44,7 @@ function init(){
   animate();
 
     function animate(){
-    cube.rotation.y += 0.01;
+    floor.rotation.z += 0.01;
     renderer.render(scene, camera);
     requestAnimationFrame(animate)
   }
@@ -41,13 +52,13 @@ function init(){
   function createObjects(){
 
     //creating a light
-    var light = new THREE.PointLight( 0xffffff );
+    light = new THREE.PointLight( 0xffffff );
     light.castShadow = true;
     light.position.set(0, 300, -300);
     scene.add(light);
 
     //creating the cube
-    var cubeGeometry = new THREE.SphereGeometry(100,100,100);
+    var cubeGeometry = new THREE.CubeGeometry(100,100,100);
     var cubeMaterial = new THREE.MeshPhongMaterial({color:0xffffff, shininess:1000});
     cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     cube.castShadow = true;
@@ -68,15 +79,7 @@ function init(){
 
   }
 
-    //mouse interactivity, I hope
-  //adding raycaster and mouse as 2d vector
-  raycaster = new THREE.Raycaster();
-  mouse = new THREE.Vector2();
 
-  //event listener for mouse
-  //document.addEventListener('mousedown', onMouseMove, false);
-  document.addEventListener('mousedown', onDocumentMouseDown, false);
-  document.addEventListener('touchstart', onDocumentTouchStart, false);
 
   function onMouseMove(event){
     mouse.x = (event.clientX/window.innerWidth) * 2 -1;
